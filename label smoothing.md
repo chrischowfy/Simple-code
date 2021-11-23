@@ -4,12 +4,12 @@
 ```Python
 import torch.nn.functional as F
 class LabelSmoothingLoss(nn.Module):
-    def __init__(self, label_smoothing, tgt_vocab_size, ignore_index=-100):
+    def __init__(self, label_smoothing, classes, ignore_index=-100):
         assert 0.0 < label_smoothing <= 1.0
         self.ignore_index = ignore_index
         super(LabelSmoothingLoss, self).__init__()
-        smoothing_value = label_smoothing / (tgt_vocab_size)  ### tgt_vocab_size is the number of classes
-        one_hot = torch.full((tgt_vocab_size,), smoothing_value)
+        smoothing_value = label_smoothing / (classes)  ### classes is the number of classes
+        one_hot = torch.full((classes,), smoothing_value)
         #one_hot[self.ignore_index] = 0  
         self.register_buffer('one_hot', one_hot.unsqueeze(0))
         self.confidence = 1.0 - label_smoothing
