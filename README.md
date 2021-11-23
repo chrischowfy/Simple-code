@@ -1,21 +1,16 @@
 # Simple-code-for-AI
-## label smoothing loss
+## label smoothing loss for classification
 ### get code from https://github.com/OpenNMT/OpenNMT-py/blob/e8622eb5c6117269bb3accd8eb6f66282b5e67d9/onmt/utils/loss.py
 
 class LabelSmoothingLoss(nn.Module):
-    """
-    With label smoothing,
-    KL-divergence between q_{smoothed ground truth prob.}(w)
-    and p_{prob. computed by model}(w) is minimized.
-    """
     def __init__(self, label_smoothing, tgt_vocab_size, ignore_index=-100):
         assert 0.0 < label_smoothing <= 1.0
         self.ignore_index = ignore_index
         super(LabelSmoothingLoss, self).__init__()
 
-        smoothing_value = label_smoothing / (tgt_vocab_size -2 )
+        smoothing_value = label_smoothing / (tgt_vocab_size)  ### tgt_vocab_size is the number of classes
         one_hot = torch.full((tgt_vocab_size,), smoothing_value)
-        #one_hot[self.ignore_index] = 0
+        #one_hot[self.ignore_index] = 0  
         self.register_buffer('one_hot', one_hot.unsqueeze(0))
 
         self.confidence = 1.0 - label_smoothing
