@@ -1,5 +1,4 @@
-# Simple-code-for-AI
-## label smoothing loss for classification
+# label smoothing loss for classification
 ### get code from https://github.com/OpenNMT/OpenNMT-py/blob/e8622eb5c6117269bb3accd8eb6f66282b5e67d9/onmt/utils/loss.py
 
 ```Python
