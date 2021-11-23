@@ -2,6 +2,7 @@
 ## Multi-GPU  one machine with multi gpu cards
 ```Python
 import os
+import torch.nn as nn
 os.environ['CUDA_VISIBLE_DEVICES'] = '4, 3, 0'  ### set the device id of using
 local_rank = [0, 1, 2] ### range from 0 to the number of using gpu cards
 device = torch.device(f'cuda:{torch.cuda.current_device()}')
@@ -18,8 +19,7 @@ Model(nn.Module):
         the Input should be tensor type data, I'm not sure if the other types of data are supported by multiple GPUs
         batch size here typically is Batch / number of gpus
 '''
-### key codes
-import torch.nn as nn
+
 ...
 model = Model()  
 model.to(device)  ## put model to the main gpu device
@@ -35,8 +35,8 @@ input_id, input_mask, lable, ... = batch
 ### input_id size is [Batch, Seq_len]
 loss = model(input_id, input_mask, lable, ...) 
 '''
-loss size is [Batch], i.e., pytorch would automatically assign Batch size data into multi gpu card, 
-than gether the processd data to one gpu card and return it
+loss size is [Batch], i.e., pytorch would automatically assign Batch size data into multi gpu cards, 
+then gether the processd data to one gpu card and return it
 '''
 loss = loss.mean() ### mean() to average on multi-gpu
 loss.backward()
