@@ -1,5 +1,4 @@
-# Simple-code-for-AI
-## Multi-GPU  one machine with multi gpu cards
+# Multi-GPU  one machine with multi gpu cards
 ```Python
 import os
 import torch.nn as nn
