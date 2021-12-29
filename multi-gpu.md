@@ -5,8 +5,8 @@ import torch.nn as nn
 os.environ['CUDA_VISIBLE_DEVICES'] = '4, 3, 0'  ### set the device id of using
 local_rank = [0, 1, 2] ### range from 0 to the number of using gpu cards
 device = torch.device(f'cuda:{torch.cuda.current_device()}')
-torch.distributed.init_process_group(init_method='tcp://localhost:36699', rank=0, world_size=1, backend='nccl')  # set multi-gpu environment
-
+torch.distributed.init_process_group(init_method='tcp://localhost:36699', rank=0, world_size=1, backend='nccl')  # set multi-gpu environment 
+#note that the mode is one process multi gpus, another mode is multi precesses multi gpus which i didn't use yet
 ### tips for writing model code ###
 ### It is recommanded to put your core code into the Model class, e.g.,
 '''
