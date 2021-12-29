@@ -1,2 +1,2 @@
-# Simple-code-for-AI
+# Simple-code
 ## Record and share some codes
