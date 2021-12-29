@@ -1,4 +1,4 @@
-Simple codes for using mixed precision in the traning procedure
+# Simple codes for using mixed precision in the traning procedure
 Here are two ways to implement mixed precision:
 1. install APEX libiary
 https://github.com/NVIDIA/apex
