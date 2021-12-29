@@ -1,1 +1,23 @@
 Simple codes for using mixed precision in the traning procedure
+Here are two ways to implement mixed precision:
+1. install APEX libiary
+https://github.com/NVIDIA/apex
+important codes:
+
+opt_level = 'O1'  ## set mixed precision options 
+model, optimizer = amp.initialize(model, optimizer, opt_level=opt_level)  ## wrap the model and optimizer with amp
+### if it has multiple otimizers, can use the below code 
+model, optimizer = amp.initialize(model, [optimizer1,optimizer2,optimizer3,...] opt_level=opt_level) 
+optimizer1,optimizer2,optimizer3,... = optimizer
+###
+...
+
+model = nn.parallel.DistributedDataParallel(model,xxx)  ## mixed precision is compatible with multi gpus, note that I only test the case of one process multi gpus
+loss =  criterion(xxx)
+with amp.scale_loss(loss, optimizer) as scaled_loss:  ## it will adaptively scale the loss to guarantee stable training procedure.
+    scaled_loss.backward()
+
+
+I strongly recommended to use second way to achieve mixed precision.
+2. use PyTorch >=1.6, it contains the mixed precision funtion
+
