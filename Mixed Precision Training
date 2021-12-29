@@ -20,4 +20,21 @@ with amp.scale_loss(loss, optimizer) as scaled_loss:  ## it will adaptively scal
 
 I strongly recommended to use second way to achieve mixed precision.
 2. use PyTorch >=1.6, it contains the mixed precision funtion
-
+### import relevant functions
+from torch.cuda.amp import autocast as autocast
+class Model():
+  xxxx
+  def forward(xxx):
+      with autocast():
+          xxx
+model = Model
+model = nn.parallel.DistributedDataParallel(model,xxx) 
+...
+scaler_m = torch.cuda.amp.GradScaler() ## use a scaler to dynamically scale loss
+with autocast():
+    logis = model(xxx)
+    losss = criterion(xxx)
+scaler_m.scale(loss).backward()
+scaler_m.step(optimizer)
+scaler_m.update()
+optimizer.zero_grad()
