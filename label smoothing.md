@@ -23,7 +23,7 @@ class LabelSmoothingLoss(nn.Module):
         model_prob.scatter_(1, target.unsqueeze(1), self.confidence)
         model_prob.masked_fill_((target == self.ignore_index).unsqueeze(1), 0)
 
-        return F.kl_div(output, model_prob, reduction='sum')
+        return F.kl_div(output, model_prob, reduction='sum') 
 ```
 ### general code
     ...
@@ -31,7 +31,7 @@ class LabelSmoothingLoss(nn.Module):
     criterion = LabelSmoothingLoss(label_smoothing, classes)
     logit = model(input) ## (batch, classes), generally obtained by fc layer
     log_soft_logit = F.log_softmax(logit, dim=-1) 
-    loss = criterion(log_soft_logit, label)  
+    loss = criterion(log_soft_logit, label)   ### the result is the sum of one batch, so can use loss/ batch_size to get loss of per example
     
     
     
